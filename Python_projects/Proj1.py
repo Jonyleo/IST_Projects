@@ -1,5 +1,3 @@
-#93728 - Joao Oliveira
-
 def eh_tabuleiro(tab):
     """eh_tabuleiro: universal -> booleano
     verifica se o argumento é um tabuleiro valido em termos de formatação"""
