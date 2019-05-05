@@ -1,8 +1,3 @@
-/* pr1.c
- * Este ficheiro contem todo o projeto
- * João Oliveira 93728
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
