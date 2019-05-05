@@ -1,5 +1,3 @@
-# Joao Oliveira - 93728
-
 #Funcoes Celulas
 
 def cria_celula(valor):
