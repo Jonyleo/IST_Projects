@@ -1,0 +1,12 @@
+# 8 creates, 1 lookup, 1 delete, 1 lookup
+c c
+c b
+c a
+c d
+c h
+c f
+c g
+c e
+l d
+d d
+l d
