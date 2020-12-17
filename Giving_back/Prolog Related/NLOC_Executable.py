@@ -1,4 +1,5 @@
 import os
+import time
 
 """
 This is an executable version of an NLOC counter for a SWI-prolog program
@@ -42,3 +43,5 @@ while True:
         break
     print("{}: File does not exist".format(program))
 countNloc(file)
+
+time.sleep(5)

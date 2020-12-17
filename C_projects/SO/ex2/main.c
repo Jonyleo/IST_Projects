@@ -1,8 +1,3 @@
-/*
-* João Oliveira 93728
-* João Domingos 93726
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
