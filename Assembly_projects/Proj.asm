@@ -309,6 +309,7 @@ program_Main: 					; loop principal do programa
 	CALL key_Proccess
 	CALL meteor_Proccess
 	CALL missile_Proccess
+	CALL refresh_PixelScreen
 
 	JMP  program_Main
 
@@ -941,52 +942,32 @@ image_Draw:                 	; pinta uma imagem no pixel screen
 	RET
 
 pixel_Draw:						; liga/desliga o pixel com coordenadas de 0 a 1F 
-	PUSH R0 					; R0 - X /// R1 - Y
-	PUSH R1                     ; se estiver ligado, desliga, e vice-versa
-	PUSH R2 				
-	PUSH R3
+	PUSH R2 					; R0 - X /// R1 - Y
+	PUSH R3                     ; se estiver ligado, desliga, e vice-versa
+	PUSH R4
 
-	MOV  R3, 80H 				; 
-	AND  R3, R0 				;
-	JNZ  pixel_Draw_Return 		;
- 								; verifica se os pixeis a ser desenhados estao confinados ao pixel screen
-	MOV  R3, 20H 				;
-	CMP  R0, R3 				;
-	JGE  pixel_Draw_Return      ;
+	MOV R4, 600CH
+	MOV [R4], R0
 
-	MOV  R2, R0
-	MOV  R3, PDr_COL_MODULE
-	MOD  R2, R3					; coloca posicao do bit na word em R2
-	DIV  R0, R3             	; coloca coluna (0 ou 1) para word em R0
+	MOV R4, 600AH
+	MOV [R4], R1
 
-	MOV  R3, PDr_COL_MUL
-	MUL  R0, R3					; calcula modificador da coluna 0 ou 2
-	MOV  R3, PDr_LIN_MUL
-	MUL  R1, R3   				; calcula modificador da linha (4 por linha)
+	MOV R2, 6008H
+	MOV R3, [R2]
+	CMP R3, 0
+	JZ pixel_On
+	pixel_Off:
+		MOV R3, 0
+		JMP pixel_put
+	pixel_On:
+		MOV R3, 1
 
-	MOV  R3, PDr_WORD_MASC   	; inicializa a mascara
+	pixel_put:
+		MOV [R2], R3
 
- pixel_Draw_Word:				; produz a word em R3 necessaria a colocar na celula
-	CMP  R2, 0					; para ligar um pixel na posicao 0 a 15
-	JZ   pixel_Draw_Fill
-	SUB  R2, 1 	 				; passa para a proxima posicao na word
-	SHR  R3, 1 				
-	JMP  pixel_Draw_Word
-
- pixel_Draw_Fill:	
-	MOV  R2, PIX_SCR 
-	ADD  R0, R1
-	ADD  R0, R2  				; calcula o endereco da celula a afetar para ligar o pixel pedido
-
-	MOV  R2, [R0]          	 	; 
-	XOR  R3, R2 				; Ligam o pixel sem desligar os adjacentes
-	MOV  [R0], R3           	;
-
- pixel_Draw_Return:	
-	POP  R3
-	POP  R2
-	POP  R1
-	POP  R0
+	POP R4
+	POP R3
+	POP R2
 	RET
 
 steer_Draw:                 	; limpa e pinta o volante de acordo com o valor de R2
@@ -1811,6 +1792,18 @@ missile_ExplodeMeteor: 			; sendo R0 o endereço de um meteorito, prepara-o para
 	POP  R2
 	POP  R1
 	POP  R0
+	RET
+
+refresh_PixelScreen:
+	PUSH R0
+	PUSH R1
+
+	MOV R0, 601AH
+	MOV R1, 1
+	MOV [R0], R1
+
+	POP R1
+	POP R1
 	RET
 
 
