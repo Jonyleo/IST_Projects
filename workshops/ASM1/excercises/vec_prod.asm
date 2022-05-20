@@ -9,24 +9,13 @@ PLACE 0H
 ; Resultado: 169BH
 
 
-MOV R3, VEC1
-MOV R4, VEC2
-MOV R0, 0
-MOV R5, 6
 
-produto_vetorial_loop:
-	MOV R1, [R3]
-	MOV R2, [R4]
 
-	ADD R3, 2
-	ADD R4, 2
 
-	MUL R1, R2
 
-	ADD R0, R1
 
-	DEC R5
-	JNZ produto_vetorial_loop
 
-end:
-	JMP end
+
+
+
+

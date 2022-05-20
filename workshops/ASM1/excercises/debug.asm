@@ -25,7 +25,7 @@ loop:
 
 	loop2:
 		CMP R1, R2
-		JZ found
+		JNZ found
 
 		MOV R3, R1
 		MOD R3, R2
